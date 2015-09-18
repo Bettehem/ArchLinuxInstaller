@@ -72,7 +72,7 @@ function keymap_view(){
 function keymap_select(){
 	printf "please select your keyboard layout:(Default is us) "
 	read -r SELECTED_KEYMAP
-	if [ "$SELECTED_KEYMAP" == "" ] then 
+	if [ "$SELECTED_KEYMAP" == "" ]; then 
 		loadkeys us
 	else
 		loadkeys $SELECTED_KEYMAP
