@@ -42,7 +42,7 @@ function installer(){
 function continue_progress(){
 	echo "do you want to continue installation from where you were?"
 	select CONTINUE_SELECTION do "Yes" "No" in
-		case 
+		case
 			Yes )  goto_continue;;
 			No ) echo "0" > .progress; check_start;;
 		esac
