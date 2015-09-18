@@ -31,7 +31,7 @@ function installer(){
 	else
 		case $PROGRESS in
 		0)
-			keymap_select ;;
+			keymap_view ;;
 		1)
 			echo "es"
 		esac
@@ -41,15 +41,42 @@ function installer(){
 #If the user ends the installation process in the middle of  and relaunches the installer
 function continue_progress(){
 	echo "do you want to continue installation from where you were?"
+	select CONTINUE_SELECTION do "Yes" "No" in
+		case 
+			Yes )  goto_continue;;
+			No ) echo "0" > .progress; check_start;;
+		esac
+	done
 }
 
-function keymap_select(){
+function goto_continue(){
+	get_progress
+	case $PROGRESS in
+		1) keymap_select;;
+	esac
+}
+
+function keymap_view(){
 	echo "Do you want to view available keymaps?"
-	
-	echo "please select your keyboard layout:(Default is us)"
+	select VIEW_AVAILABLE_KEYMAPS do "Yes" "No "in
+		case 
+			Yes ) echo "Press q when you are done"; sleep 2; localectl list-keymaps | less;;
+			No ) keymap_select;;
+		esac
+	done
 	
 	set_progress "1"
 	get_progress
+}
+
+function keymap_select(){
+	printf "please select your keyboard layout:(Default is us) "
+	read -r SELECTED_KEYMAP
+	if [ "$SELECTED_KEYMAP" == "" ] then 
+		loadkeys us
+	else
+		loadkeys $SELECTED_KEYMAP
+	fi
 }
 
 check_start
