@@ -43,8 +43,8 @@ function continue_progress(){
 	echo "do you want to continue installation from where you were?"
 	select CONTINUE_SELECTION in "Yes" "No"; do
 		case $CONTINUE_SELECTION in
-			Yes )  goto_continue;;
-			No ) echo "0" > .progress; check_start;;
+			Yes ) goto_continue; break;;
+			No ) echo "0" > .progress; check_start; break;;
 		esac
 	done
 }
