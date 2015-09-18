@@ -41,8 +41,8 @@ function installer(){
 #If the user ends the installation process in the middle of  and relaunches the installer
 function continue_progress(){
 	echo "do you want to continue installation from where you were?"
-	select CONTINUE_SELECTION do "Yes" "No" in
-		case
+	select CONTINUE_SELECTION do "Yes" "No"
+		case $CONTINUE_SELECTION in
 			Yes )  goto_continue;;
 			No ) echo "0" > .progress; check_start;;
 		esac
@@ -58,8 +58,8 @@ function goto_continue(){
 
 function keymap_view(){
 	echo "Do you want to view available keymaps?"
-	select VIEW_AVAILABLE_KEYMAPS do "Yes" "No "in
-		case 
+	select VIEW_AVAILABLE_KEYMAPS do "Yes" "No"
+		case $VIEW_AVAILABLE_KEYMAPS in
 			Yes ) echo "Press q when you are done"; sleep 2; localectl list-keymaps | less;;
 			No ) keymap_select;;
 		esac
