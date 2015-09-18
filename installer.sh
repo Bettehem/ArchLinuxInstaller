@@ -60,7 +60,7 @@ function keymap_view(){
 	echo "Do you want to view available keymaps?"
 	select VIEW_AVAILABLE_KEYMAPS in "Yes" "No"; do
 		case $VIEW_AVAILABLE_KEYMAPS in
-			Yes ) echo "Press q when you are done"; sleep 2; localectl list-keymaps | less; set_progress "1"; get_progress; break;;
+			Yes ) echo "Press q when you are done"; sleep 2; localectl list-keymaps | less; keymap_select; set_progress "1"; get_progress; break;;
 			No ) keymap_select; set_progress "1"; get_progress; break;;
 		esac
 	done
