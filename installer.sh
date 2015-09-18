@@ -26,6 +26,7 @@ function set_progress(){
 
 #Main part of installer
 function installer(){
+	check_start
 	if [ "$PROGRESS" -gt 0 ]; then
 		continue_progress
 	else
@@ -42,7 +43,7 @@ function continue_progress(){
 	select CONTINUE_SELECTION in "Yes" "No"; do
 		case $CONTINUE_SELECTION in
 			Yes ) goto_continue; break;;
-			No ) echo "0" > .progress; check_start; break;;
+			No ) echo "0" > .progress; installer; break;;
 		esac
 	done
 }
@@ -58,7 +59,7 @@ function keymap_view(){
 	echo "Do you want to view available keymaps?"
 	select VIEW_AVAILABLE_KEYMAPS in "Yes" "No"; do
 		case $VIEW_AVAILABLE_KEYMAPS in
-			Yes ) echo "Press q when you are done"; sleep 2; localectl list-keymaps | less; keymap_select; set_progress "1"; get_progress; break;;
+			Yes ) clear; echo "Press q when you are done"; sleep 2; localectl list-keymaps | less; keymap_select; set_progress "1"; get_progress; break;;
 			No ) keymap_select; set_progress "1"; get_progress; break;;
 		esac
 	done
@@ -76,5 +77,4 @@ function keymap_select(){
 	get_progress
 }
 
-check_start
 installer
