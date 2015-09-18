@@ -30,10 +30,8 @@ function installer(){
 		continue_progress
 	else
 		case $PROGRESS in
-		0)
-			keymap_view ;;
-		1)
-			echo "es"
+		0) keymap_view ;;
+		1) echo "es" ;;
 		esac
 	fi
 }
@@ -74,6 +72,8 @@ function keymap_select(){
 	else
 		loadkeys $SELECTED_KEYMAP
 	fi
+	set_progress "2"
+	get_progress
 }
 
 check_start
