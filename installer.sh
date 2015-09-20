@@ -509,9 +509,9 @@ function root_password(){
 	elif [ "$ROOT_PASSWORD" == "Y" ]; then
 		passwd
 	elif [ "$ROOT_PASSWORD" == "n" ]; then
-		;
+		echo ""
 	elif [ "$ROOT_PASSWORD" == "N" ]; then
-		;
+		echo ""
 	else
 		root_password
 	fi
@@ -638,9 +638,9 @@ function check_multiboot(){
 			pacman -Sy os-prober --noconfirm --needed
 			os-prober
 		elif [ $MULTI_OS == "n" ]; then
-			;
+			echo ""
 		elif [ $MULTI_OS == "N" ]; then
-			;
+			echo ""
 		else
 			check_multiboot
 		fi
@@ -710,9 +710,9 @@ function connman_install(){
 		elif [ "$ENABLE_WIFI" == "Y" ]; then
 			connmanctl enable wifi
 		elif [ "$ENABLE_WIFI" == "n" ]; then
-			;
+			echo ""
 		elif [ "$ENABLE_WIFI" == "N" ]; then
-			;
+			echo ""
 		else
 			connman_install
 		fi
@@ -720,9 +720,9 @@ function connman_install(){
 		pacman -S connman --noconfirm --needed
 		systemctl enable connman
 	elif [ "$CONNMAN" == "n" ]; then
-		;
+		echo ""
 	elif [ "$CONNMAN" == "N" ]; then
-		;
+		echo ""
 	else
 		connman_install
 	fi
@@ -738,9 +738,9 @@ function networkmanager_install(){
 		pacman -S networkmanager --noconfirm --needed
 		systemctl enable networkmanager
 	elif [ "$NETWORKMANAGER" == "n" ]; then
-		;
+		echo ""
 	elif [ "$NETWORKMANAGER" == "N" ]; then
-		;
+		echo ""
 	else
 		networkmanager_install
 	fi
@@ -764,9 +764,9 @@ function normal_user(){
 		useradd -m -g users -G storage,power,wheel -s /bin/bash $USERNAME
 		passwd $USERNAME
 	elif [ "$ADD_USER" == "n" ]; then
-		;
+		echo ""
 	elif [ "$ADD_USER" == "N" ]; then
-		;
+		echo ""
 	else
 		normal_user
 	fi
