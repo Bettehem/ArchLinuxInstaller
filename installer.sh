@@ -156,7 +156,7 @@ function disk_partition(){
 	show_progress
 	set_drive "$SELECTED_DRIVE"
 	echo "Do you want to partition $SELECTED_DRIVE?"
-	echo "WARNING! IT\'S NOT RECOMMENDED TO CREATE A SWAP PARTITION IF YOU ARE INSTALLING ON TO A USB DRIVE!"
+	echo "WARNING! IT IS NOT RECOMMENDED TO CREATE A SWAP PARTITION IF YOU ARE INSTALLING ON TO A USB DRIVE!"
 	select DRIVE_PARTITION in "Yes" "No"; do
 		case $DRIVE_PARTITION in
 			Yes) cfdisk $SELECTED_DRIVE; set_progress "4"; clear; disk_partitioned; break;;
@@ -218,7 +218,7 @@ function root_created(){
 }
 
 function home_created(){
-	printf "Did you create a root partition?[y/n]: "
+	printf "Did you create a home partition?[y/n]: "
 	read -r CREATED_HOME
 	if [ "$CREATED_HOME" == "y" ]; then
 		printf "Enter partition number\n(for example if your home partition is /dev/sda3 enter \"3\"): "
@@ -236,7 +236,7 @@ function home_created(){
 }
 
 function swap_created(){
-	printf "Did you create a root partition?[y/n]: "
+	printf "Did you create a swap partition?[y/n]: "
 	read -r CREATED_SWAP
 	if [ "$CREATED_SWAP" == "y" ]; then
 		printf "Enter partition number\n(for example if your swap partition is /dev/sda4 enter \"4\"): "
