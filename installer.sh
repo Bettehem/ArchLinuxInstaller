@@ -14,6 +14,7 @@ echo -e "Copyright 2015 Chris Mustola\n\nArch Linux installer tool\n------------
 #Initialize variables
 PROGRESS=""
 SELECTED_DRIVE=""
+USING_USB=""
 TOTAL_PROGRESS=7
 #-------------------------------------------------------------------------------
 
@@ -43,6 +44,15 @@ function set_drive(){
 
 function get_drive(){
 	SELECTED_DRIVE="$(cat .drive_details/selected_drive)"
+}
+
+function set_using_usb(){
+	echo "$1" > .drive_details/usb
+	get_using_usb
+}
+
+function get_using_usb(){
+	USING_USB="$(cat .drive_details/selected_drive)"
 }
 #-------------------------------------------------------------------------------
 
@@ -278,15 +288,15 @@ function filesystems(){
 #################################################################################
 function using_usb(){
 	printf "Are you installing your system on to a usb stick?[y/n] "
-	read -r USING_USB
-	if [ "$USING_USB" == "y" ]; then
-		echo "1" > .drive_details/usb
-	elif [ "$USING_USB" == "Y" ]; then
-		echo ""
-	elif [ "$USING_USB" == "n" ]; then
-		echo ""
-	elif [ "$USING_USB" == "N" ]; then
-		echo ""
+	read -r DRIVE_IS_USB
+	if [ "$DRIVE_IS_USB" == "y" ]; then
+		set_using_usb "1"
+	elif [ "$DRIVE_IS_USB" == "Y" ]; then
+		set_using_usb "1"
+	elif [ "$DRIVE_IS_USB" == "n" ]; then
+		set_using_usb "0"
+	elif [ "$DRIVE_IS_USB" == "N" ]; then
+		set_using_usb "0"
 	else
 		using_usb
 	fi
@@ -398,6 +408,10 @@ function mounting_partitions(){
 function install_base(){
 	show_progress
 	pacstrap /mnt base base-devel
+	
+	echo "Base system installed"
+	set_progress "8"
+	clear
 }
 #-------------------------------------------------------------------------------
 
