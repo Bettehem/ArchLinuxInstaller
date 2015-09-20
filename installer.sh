@@ -72,7 +72,7 @@ function check_start(){
 		get_progress
 	fi
 	
-	if [! -d ".drive_details" ]; then
+	if [ ! -d ".drive_details" ]; then
 		mkdir .drive_details
 	fi
 }
