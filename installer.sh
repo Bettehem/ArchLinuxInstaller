@@ -173,7 +173,7 @@ function disk_partition(){
 	show_progress
 	set_drive "$SELECTED_DRIVE"
 	echo "Do you want to partition $SELECTED_DRIVE?"
-	echo "WARNING! IT IS NOT RECOMMENDED TO CREATE A SWAP PARTITION IF YOU ARE INSTALLING ON TO A USB DRIVE!"
+	echo -e "WARNING! IT IS NOT RECOMMENDED TO CREATE A SWAP PARTITION IF\nYOU ARE INSTALLING ON TO A USB DRIVE!"
 	select DRIVE_PARTITION in "Yes" "No"; do
 		case $DRIVE_PARTITION in
 			Yes) cfdisk $SELECTED_DRIVE; set_progress "4"; clear; disk_partitioned; break;;
@@ -333,10 +333,10 @@ function boot_filesystem(){
 		echo "$BOOT_LABEL" > .drive_details/boot_label
 		
 		echo -e "Only f2fs and ext4 are supported with labels in this installation.\nIf you choose another filesystem, you have to label it manually."
-		echo "What filesystem do you want for your root partition? (f2fs recommended for usb installation)"
-		select FILESYSTEM_BOOT in "f2fs" "ext4" "other"; do
+		echo "What filesystem do you want for your boot partition? (ext2 or ext4 recommended)"
+		select FILESYSTEM_BOOT in "ext2" "ext4" "other"; do
 			case $FILESYSTEM_BOOT in
-				f2fs) mkfs.f2fs -l $BOOT_LABEL "$SELECTED_DRIVE$BOOT_PARTITION"; echo "f2fs" > .drive_details/boot_filesystem; echo ""; break;;
+				ext2) mkfs.ext2 -L $BOOT_LABEL "$SELECTED_DRIVE$BOOT_PARTITION"; echo "ext2" > .drive_details/boot_filesystem; echo ""; break;;
 				ext4) mkfs.ext4 -L $BOOT_LABEL "$SELECTED_DRIVE$BOOT_PARTITION"; echo "ext4" > .drive_details/boot_filesystem; echo ""; break;;
 				other) printf "Enter filesystem to be used: "; read -r CUSTOM_BOOT_FILESYSTEM; echo "$CUSTOM_BOOT_FILESYSTEM" > .drive_details/custom_boot_filesystem; mkfs."$CUSTOM_BOOT_FILESYSTEM" "$SELECTED_DRIVE$BOOT_PARTITION"; echo ""; break;;
 			esac
@@ -435,6 +435,12 @@ function install_base(){
 	echo "Base system installed"
 	set_progress "8"
 	clear
+	fstab
+}
+
+#Part 8
+function fstab(){
+	
 }
 #-------------------------------------------------------------------------------
 
