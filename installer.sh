@@ -186,7 +186,7 @@ function boot_created(){
 	if [ "$CREATED_BOOT" == "y" ]; then
 		printf "Enter partition number\n(for example if your boot partition is /dev/sda1 enter \"1\"): "
 		read -r BOOT_PARTITION
-		echo "$SELECTED_DRIVE/$BOOT_PARTITION" > .drive_details/boot
+		echo "$SELECTED_DRIVE$BOOT_PARTITION" > .drive_details/boot
 	elif [ "$CREATED_BOOT" == "Y" ]; then
 		echo ""
 	elif [ "$CREATED_BOOT" == "n" ]; then
@@ -205,7 +205,7 @@ function root_created(){
 	if [ "$CREATED_ROOT" == "y" ]; then
 		printf "Enter partition number\n(for example if your root partition is /dev/sda2 enter \"2\"): "
 		read -r ROOT_PARTITION
-		echo "$SELECTED_DRIVE/$ROOT_PARTITION" > .drive_details/root
+		echo "$SELECTED_DRIVE$ROOT_PARTITION" > .drive_details/root
 	elif [ "$CREATED_ROOT" == "Y" ]; then
 		echo ""
 	elif [ "$CREATED_ROOT" == "n" ]; then
@@ -223,7 +223,7 @@ function home_created(){
 	if [ "$CREATED_HOME" == "y" ]; then
 		printf "Enter partition number\n(for example if your home partition is /dev/sda3 enter \"3\"): "
 		read -r HOME_PARTITION
-		echo "$SELECTED_DRIVE/$HOME_PARTITION" > .drive_details/home
+		echo "$SELECTED_DRIVE$HOME_PARTITION" > .drive_details/home
 	elif [ "$CREATED_HOME" == "Y" ]; then
 		echo ""
 	elif [ "$CREATED_HOME" == "n" ]; then
@@ -241,7 +241,7 @@ function swap_created(){
 	if [ "$CREATED_SWAP" == "y" ]; then
 		printf "Enter partition number\n(for example if your swap partition is /dev/sda4 enter \"4\"): "
 		read -r SWAP_PARTITION
-		echo "$SELECTED_DRIVE/$SWAP_PARTITION" > .drive_details/swap
+		echo "$SELECTED_DRIVE$SWAP_PARTITION" > .drive_details/swap
 	elif [ "$CREATED_SWAP" == "Y" ]; then
 		echo ""
 	elif [ "$CREATED_SWAP" == "n" ]; then
@@ -268,7 +268,7 @@ function filesystems(){
 	if [ -f ".drive_details/home" ]; then
 		home_filesystem
 	fi
-	mkswap "$SELECTED_DRIVE/$SWAP_PARTITION"
+	mkswap "$SELECTED_DRIVE$SWAP_PARTITION"
 	
 	set_progress "6"
 	clear
@@ -303,18 +303,18 @@ function boot_filesystem(){
 		echo "What filesystem do you want for your root partition? (f2fs recommended for usb installation)"
 		select FILESYSTEM_BOOT in "f2fs" "ext4" "other"; do
 			case $FILESYSTEM_BOOT in
-				f2fs) mkfs.f2fs -L $BOOT_LABEL "$SELECTED_DRIVE/$BOOT_PARTITION"; echo "f2fs" > .drive_details/boot_filesystem; break;;
-				ext4) mkfs.ext4 -L $BOOT_LABEL "$SELECTED_DRIVE/$BOOT_PARTITION"; echo "ext4" > .drive_details/boot_filesystem; break;;
-				other) printf "Enter filesystem to be used: "; read -r CUSTOM_BOOT_FILESYSTEM; echo "$CUSTOM_BOOT_FILESYSTEM" > .drive_details/custom_boot_filesystem; mkfs."$CUSTOM_BOOT_FILESYSTEM" "$SELECTED_DRIVE/$BOOT_PARTITION"; break;;
+				f2fs) mkfs.f2fs -L $BOOT_LABEL "$SELECTED_DRIVE$BOOT_PARTITION"; echo "f2fs" > .drive_details/boot_filesystem; break;;
+				ext4) mkfs.ext4 -L $BOOT_LABEL "$SELECTED_DRIVE$BOOT_PARTITION"; echo "ext4" > .drive_details/boot_filesystem; break;;
+				other) printf "Enter filesystem to be used: "; read -r CUSTOM_BOOT_FILESYSTEM; echo "$CUSTOM_BOOT_FILESYSTEM" > .drive_details/custom_boot_filesystem; mkfs."$CUSTOM_BOOT_FILESYSTEM" "$SELECTED_DRIVE$BOOT_PARTITION"; break;;
 			esac
 		done
 	else
 		echo "What filesystem do you want for your boot partition? (ext2 or ext4 recommended)"
 		select FILESYSTEM_BOOT in "ext2" "ext4" "other"; do
 			case $FILESYSTEM_BOOT in
-				ext2) mkfs.ext2 "$SELECTED_DRIVE/$BOOT_PARTITION"; echo "ext2" > .drive_details/boot_filesystem; break;;
-				ext4) mkfs.ext4 "$SELECTED_DRIVE/$BOOT_PARTITION"; echo "ext4" > .drive_details/boot_filesystem; break;;
-				other) printf "Enter filesystem to be used: "; read -r CUSTOM_BOOT_FILESYSTEM; echo "$CUSTOM_BOOT_FILESYSTEM" > .drive_details/custom_boot_filesystem; mkfs."$CUSTOM_BOOT_FILESYSTEM" "$SELECTED_DRIVE/$BOOT_PARTITION"; break;;
+				ext2) mkfs.ext2 "$SELECTED_DRIVE$BOOT_PARTITION"; echo "ext2" > .drive_details/boot_filesystem; break;;
+				ext4) mkfs.ext4 "$SELECTED_DRIVE$BOOT_PARTITION"; echo "ext4" > .drive_details/boot_filesystem; break;;
+				other) printf "Enter filesystem to be used: "; read -r CUSTOM_BOOT_FILESYSTEM; echo "$CUSTOM_BOOT_FILESYSTEM" > .drive_details/custom_boot_filesystem; mkfs."$CUSTOM_BOOT_FILESYSTEM" "$SELECTED_DRIVE$BOOT_PARTITION"; break;;
 			esac
 		done
 	fi
@@ -331,17 +331,17 @@ function root_filesystem(){
 		echo "What filesystem do you want for your root partition? (f2fs recommended for usb installation)"
 		select FILESYSTEM_ROOT in "f2fs" "ext4" "other"; do
 			case $FILESYSTEM_ROOT in
-				f2fs) mkfs.f2fs -L $ROOT_LABEL "$SELECTED_DRIVE/$ROOT_PARTITION"; echo "f2fs" > .drive_details/root_filesystem; break;;
-				ext4) mkfs.ext4 -L $ROOT_LABEL "$SELECTED_DRIVE/$ROOT_PARTITION"; echo "ext4" > .drive_details/root_filesystem; break;;
-				other) printf "Enter filesystem to be used: "; read -r CUSTOM_ROOT_FILESYSTEM; echo "$CUSTOM_ROOT_FILESYSTEM" > .drive_details/custom_root_filesystem; mkfs."$CUSTOM_ROOT_FILESYSTEM" "$SELECTED_DRIVE/$ROOT_PARTITION"; break;;
+				f2fs) mkfs.f2fs -L $ROOT_LABEL "$SELECTED_DRIVE$ROOT_PARTITION"; echo "f2fs" > .drive_details/root_filesystem; break;;
+				ext4) mkfs.ext4 -L $ROOT_LABEL "$SELECTED_DRIVE$ROOT_PARTITION"; echo "ext4" > .drive_details/root_filesystem; break;;
+				other) printf "Enter filesystem to be used: "; read -r CUSTOM_ROOT_FILESYSTEM; echo "$CUSTOM_ROOT_FILESYSTEM" > .drive_details/custom_root_filesystem; mkfs."$CUSTOM_ROOT_FILESYSTEM" "$SELECTED_DRIVE$ROOT_PARTITION"; break;;
 			esac
 		done
 	else
 		echo "What filesystem do you want for your root partition? (ext4 recommended)"
 		select FILESYSTEM_ROOT in "ext4" "other"; do
 			case $FILESYSTEM_ROOT in
-				ext4) mkfs.ext2 "$SELECTED_DRIVE/$ROOT_PARTITION"; echo "ext4" > .drive_details/root_filesystem; break;;
-				other) printf "Enter filesystem to be used: "; read -r CUSTOM_ROOT_FILESYSTEM; echo "$CUSTOM_ROOT_FILESYSTEM" > .drive_details/custom_root_filesystem; mkfs."$CUSTOM_ROOT_FILESYSTEM" "$SELECTED_DRIVE/$ROOT_PARTITION"; break;;
+				ext4) mkfs.ext2 "$SELECTED_DRIVE$ROOT_PARTITION"; echo "ext4" > .drive_details/root_filesystem; break;;
+				other) printf "Enter filesystem to be used: "; read -r CUSTOM_ROOT_FILESYSTEM; echo "$CUSTOM_ROOT_FILESYSTEM" > .drive_details/custom_root_filesystem; mkfs."$CUSTOM_ROOT_FILESYSTEM" "$SELECTED_DRIVE$ROOT_PARTITION"; break;;
 			esac
 		done
 	fi
@@ -358,17 +358,17 @@ function home_filesystem(){
 		echo "What filesystem do you want for your home partition? (f2fs recommended for usb installation)"
 		select FILESYSTEM_HOME in "f2fs" "ext4" "other"; do
 			case $FILESYSTEM_HOME in
-				f2fs) mkfs.f2fs -L $HOME_LABEL "$SELECTED_DRIVE/$HOME_PARTITION"; echo "f2fs" > .drive_details/home_filesystem; break;;
-				ext4) mkfs.ext4 -L $HOME_LABEL "$SELECTED_DRIVE/$HOME_PARTITION"; echo "ext4" > .drive_details/home_filesystem; break;;
-				other) printf "Enter filesystem to be used: "; read -r CUSTOM_HOME_FILESYSTEM; echo "$CUSTOM_HOME_FILESYSTEM" > .drive_details/custom_home_filesystem; mkfs."$CUSTOM_HOME_FILESYSTEM" "$SELECTED_DRIVE/$HOME_PARTITION"; break;;
+				f2fs) mkfs.f2fs -L $HOME_LABEL "$SELECTED_DRIVE$HOME_PARTITION"; echo "f2fs" > .drive_details/home_filesystem; break;;
+				ext4) mkfs.ext4 -L $HOME_LABEL "$SELECTED_DRIVE$HOME_PARTITION"; echo "ext4" > .drive_details/home_filesystem; break;;
+				other) printf "Enter filesystem to be used: "; read -r CUSTOM_HOME_FILESYSTEM; echo "$CUSTOM_HOME_FILESYSTEM" > .drive_details/custom_home_filesystem; mkfs."$CUSTOM_HOME_FILESYSTEM" "$SELECTED_DRIVE$HOME_PARTITION"; break;;
 			esac
 		done
 	else
 		echo "What filesystem do you want for your home partition? (ext4 recommended)"
 		select FILESYSTEM_HOME in "ext4" "other"; do
 			case $FILESYSTEM_HOME in
-				ext4) mkfs.ext2 "$SELECTED_DRIVE/$HOME_PARTITION"; echo "ext4" > .drive_details/home_filesystem; break;;
-				other) printf "Enter filesystem to be used: "; read -r CUSTOM_HOME_FILESYSTEM; echo "$CUSTOM_HOME_FILESYSTEM" > .drive_details/custom_home_filesystem; mkfs."$CUSTOM_HOME_FILESYSTEM" "$SELECTED_DRIVE/$HOME_PARTITION"; break;;
+				ext4) mkfs.ext2 "$SELECTED_DRIVE$HOME_PARTITION"; echo "ext4" > .drive_details/home_filesystem; break;;
+				other) printf "Enter filesystem to be used: "; read -r CUSTOM_HOME_FILESYSTEM; echo "$CUSTOM_HOME_FILESYSTEM" > .drive_details/custom_home_filesystem; mkfs."$CUSTOM_HOME_FILESYSTEM" "$SELECTED_DRIVE$HOME_PARTITION"; break;;
 			esac
 		done
 	fi
@@ -379,14 +379,14 @@ function home_filesystem(){
 function mounting_partitions(){
 	show_progress
 	echo "Mounting partitions..."
-	mount "$SELECTED_DRIVE/$ROOT_PARTITION" /mnt
+	mount "$SELECTED_DRIVE$ROOT_PARTITION" /mnt
 	if [ -f ".drive_details/boot" ]; then
 		mkdir /mnt/boot
-		mount "$SELECTED_DRIVE/$ROOT_PARTITION" /mnt/boot
+		mount "$SELECTED_DRIVE$ROOT_PARTITION" /mnt/boot
 	fi
 	if [ -f ".drive_details/home" ]; then
 		mkdir /mnt/home
-		mount "$SELECTED_DRIVE/$HOME_PARTITION" /mnt/home
+		mount "$SELECTED_DRIVE$HOME_PARTITION" /mnt/home
 	fi
 	
 	set_progress "7"
