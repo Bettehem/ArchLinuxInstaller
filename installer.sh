@@ -104,6 +104,7 @@ function continue_progress(){
 }
 
 function goto_continue(){
+	clear
 	get_progress
 	case $PROGRESS in
 		1) keymap_select;;
