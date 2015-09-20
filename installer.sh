@@ -415,7 +415,7 @@ function mounting_partitions(){
 	mount "$SELECTED_DRIVE$ROOT_PARTITION" /mnt
 	if [ -f ".drive_details/boot" ]; then
 		mkdir /mnt/boot
-		mount "$SELECTED_DRIVE$ROOT_PARTITION" /mnt/boot
+		mount "$SELECTED_DRIVE$BOOT_PARTITION" /mnt/boot
 	fi
 	if [ -f ".drive_details/home" ]; then
 		mkdir /mnt/home
@@ -440,6 +440,7 @@ function install_base(){
 
 #Part 8
 function fstab(){
+	echo "Generating fstab..."
 	
 }
 #-------------------------------------------------------------------------------
