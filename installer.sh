@@ -176,11 +176,11 @@ function boot_created(){
 	if [ "$CREATED_BOOT" == "y" ]; then
 		printf "Enter partition number (for example if your boot partition is ): "
 	elif [ "$CREATED_BOOT" == "Y" ]; then
-		
+		echo ""
 	elif [ "$CREATED_BOOT" == "n" ]; then
-		
+		echo ""
 	elif [ "$CREATED_BOOT" == "N" ]; then
-		
+		echo ""
 	else
 		clear
 		boot_created
