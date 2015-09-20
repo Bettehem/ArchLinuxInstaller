@@ -42,7 +42,7 @@ function set_drive(){
 }
 
 function get_drive(){
-	SELECTED_DRIVE="$(cat .drive_details/selected_drive"
+	SELECTED_DRIVE="$(cat .drive_details/selected_drive)"
 }
 #-------------------------------------------------------------------------------
 
