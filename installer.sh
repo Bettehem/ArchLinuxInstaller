@@ -204,7 +204,11 @@ function boot_created(){
 		printf "Enter partition number\n(for example if your boot partition is /dev/sda1 enter \"1\"): "
 		read -r BOOT_PARTITION
 		echo "$SELECTED_DRIVE$BOOT_PARTITION" > .drive_details/boot
+		echo ""
 	elif [ "$CREATED_BOOT" == "Y" ]; then
+		printf "Enter partition number\n(for example if your boot partition is /dev/sda1 enter \"1\"): "
+		read -r BOOT_PARTITION
+		echo "$SELECTED_DRIVE$BOOT_PARTITION" > .drive_details/boot
 		echo ""
 	elif [ "$CREATED_BOOT" == "n" ]; then
 		echo ""
@@ -223,7 +227,11 @@ function root_created(){
 		printf "Enter partition number\n(for example if your root partition is /dev/sda2 enter \"2\"): "
 		read -r ROOT_PARTITION
 		echo "$SELECTED_DRIVE$ROOT_PARTITION" > .drive_details/root
+		echo ""
 	elif [ "$CREATED_ROOT" == "Y" ]; then
+		printf "Enter partition number\n(for example if your root partition is /dev/sda2 enter \"2\"): "
+		read -r ROOT_PARTITION
+		echo "$SELECTED_DRIVE$ROOT_PARTITION" > .drive_details/root
 		echo ""
 	elif [ "$CREATED_ROOT" == "n" ]; then
 		echo ""
@@ -241,7 +249,11 @@ function home_created(){
 		printf "Enter partition number\n(for example if your home partition is /dev/sda3 enter \"3\"): "
 		read -r HOME_PARTITION
 		echo "$SELECTED_DRIVE$HOME_PARTITION" > .drive_details/home
+		echo ""
 	elif [ "$CREATED_HOME" == "Y" ]; then
+		printf "Enter partition number\n(for example if your home partition is /dev/sda3 enter \"3\"): "
+		read -r HOME_PARTITION
+		echo "$SELECTED_DRIVE$HOME_PARTITION" > .drive_details/home
 		echo ""
 	elif [ "$CREATED_HOME" == "n" ]; then
 		echo ""
@@ -259,7 +271,11 @@ function swap_created(){
 		printf "Enter partition number\n(for example if your swap partition is /dev/sda4 enter \"4\"): "
 		read -r SWAP_PARTITION
 		echo "$SELECTED_DRIVE$SWAP_PARTITION" > .drive_details/swap
+		echo ""
 	elif [ "$CREATED_SWAP" == "Y" ]; then
+		printf "Enter partition number\n(for example if your swap partition is /dev/sda4 enter \"4\"): "
+		read -r SWAP_PARTITION
+		echo "$SELECTED_DRIVE$SWAP_PARTITION" > .drive_details/swap
 		echo ""
 	elif [ "$CREATED_SWAP" == "n" ]; then
 		echo ""
@@ -320,7 +336,7 @@ function boot_filesystem(){
 		echo "What filesystem do you want for your root partition? (f2fs recommended for usb installation)"
 		select FILESYSTEM_BOOT in "f2fs" "ext4" "other"; do
 			case $FILESYSTEM_BOOT in
-				f2fs) mkfs.f2fs -L $BOOT_LABEL "$SELECTED_DRIVE$BOOT_PARTITION"; echo "f2fs" > .drive_details/boot_filesystem; break;;
+				f2fs) mkfs.f2fs -l $BOOT_LABEL "$SELECTED_DRIVE$BOOT_PARTITION"; echo "f2fs" > .drive_details/boot_filesystem; break;;
 				ext4) mkfs.ext4 -L $BOOT_LABEL "$SELECTED_DRIVE$BOOT_PARTITION"; echo "ext4" > .drive_details/boot_filesystem; break;;
 				other) printf "Enter filesystem to be used: "; read -r CUSTOM_BOOT_FILESYSTEM; echo "$CUSTOM_BOOT_FILESYSTEM" > .drive_details/custom_boot_filesystem; mkfs."$CUSTOM_BOOT_FILESYSTEM" "$SELECTED_DRIVE$BOOT_PARTITION"; break;;
 			esac
@@ -348,7 +364,7 @@ function root_filesystem(){
 		echo "What filesystem do you want for your root partition? (f2fs recommended for usb installation)"
 		select FILESYSTEM_ROOT in "f2fs" "ext4" "other"; do
 			case $FILESYSTEM_ROOT in
-				f2fs) mkfs.f2fs -L $ROOT_LABEL "$SELECTED_DRIVE$ROOT_PARTITION"; echo "f2fs" > .drive_details/root_filesystem; break;;
+				f2fs) mkfs.f2fs -l $ROOT_LABEL "$SELECTED_DRIVE$ROOT_PARTITION"; echo "f2fs" > .drive_details/root_filesystem; break;;
 				ext4) mkfs.ext4 -L $ROOT_LABEL "$SELECTED_DRIVE$ROOT_PARTITION"; echo "ext4" > .drive_details/root_filesystem; break;;
 				other) printf "Enter filesystem to be used: "; read -r CUSTOM_ROOT_FILESYSTEM; echo "$CUSTOM_ROOT_FILESYSTEM" > .drive_details/custom_root_filesystem; mkfs."$CUSTOM_ROOT_FILESYSTEM" "$SELECTED_DRIVE$ROOT_PARTITION"; break;;
 			esac
@@ -375,7 +391,7 @@ function home_filesystem(){
 		echo "What filesystem do you want for your home partition? (f2fs recommended for usb installation)"
 		select FILESYSTEM_HOME in "f2fs" "ext4" "other"; do
 			case $FILESYSTEM_HOME in
-				f2fs) mkfs.f2fs -L $HOME_LABEL "$SELECTED_DRIVE$HOME_PARTITION"; echo "f2fs" > .drive_details/home_filesystem; break;;
+				f2fs) mkfs.f2fs -l $HOME_LABEL "$SELECTED_DRIVE$HOME_PARTITION"; echo "f2fs" > .drive_details/home_filesystem; break;;
 				ext4) mkfs.ext4 -L $HOME_LABEL "$SELECTED_DRIVE$HOME_PARTITION"; echo "ext4" > .drive_details/home_filesystem; break;;
 				other) printf "Enter filesystem to be used: "; read -r CUSTOM_HOME_FILESYSTEM; echo "$CUSTOM_HOME_FILESYSTEM" > .drive_details/custom_home_filesystem; mkfs."$CUSTOM_HOME_FILESYSTEM" "$SELECTED_DRIVE$HOME_PARTITION"; break;;
 			esac
