@@ -88,7 +88,7 @@ function continue_progress(){
 	select CONTINUE_SELECTION in "Yes" "No"; do
 		case $CONTINUE_SELECTION in
 			Yes ) goto_continue; break;;
-			No ) rm -r .progress; if [ -d ".drive_details" ]; then; rm -r .drive_details; fi; installer; break;;
+			No ) rm -r .progress; rm -r .drive_details; installer; break;;
 		esac
 	done
 }
