@@ -52,7 +52,7 @@ function set_using_usb(){
 }
 
 function get_using_usb(){
-	USING_USB="$(cat .drive_details/selected_drive)"
+	USING_USB="$(cat .drive_details/usb)"
 }
 #-------------------------------------------------------------------------------
 
