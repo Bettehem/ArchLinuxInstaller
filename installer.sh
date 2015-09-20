@@ -173,13 +173,13 @@ function disk_partitioned(){
 function boot_created(){
 	printf "Did you create a separate boot partition?[y/n]"
 	read -r CREATED_BOOT
-	if [ "$CREATED_BOOT" -eq "y" ]; then
+	if [ "$CREATED_BOOT" == "y" ]; then
 		printf "Enter partition number (for example if your boot partition is ): "
-	elif [ "$CREATED_BOOT" -eq "Y" ]; then
+	elif [ "$CREATED_BOOT" == "Y" ]; then
 	
-	elif [ "$CREATED_BOOT" -eq "n" ]; then
+	elif [ "$CREATED_BOOT" == "n" ]; then
 	
-	elif [ "$CREATED_BOOT" -eq "N" ]; then
+	elif [ "$CREATED_BOOT" == "N" ]; then
 	
 	else
 		clear
