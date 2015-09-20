@@ -468,8 +468,8 @@ function fstab(){
 #Part 9
 function timezone(){
 	show_progress
-	echo "Listing timezones. press \"q\" when you are done."
-	sleep 2
+	echo "Listing timezones. press \"q\" when you are done. Press enter to continue"
+	read
 	timedatectl list-timezones
 	clear
 	printf "Enter your timezone (For example \"Europe/Helsinki\"): "
@@ -495,7 +495,7 @@ function chrooting(){
 	echo "Chrooting in to /mnt and launching installer.."
 	arch-chroot /mnt ./root/ArchLinuxInstaller/installer.sh "1"
 	clear
-	finish-install
+	finish_install
 }
 
 #Continuing from here, the installer will be executed in chroot
