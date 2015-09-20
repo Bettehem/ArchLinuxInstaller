@@ -627,7 +627,7 @@ function check_multiboot(){
 	show_progress
 	get_using_usb
 	if [ "$USING_USB" == "1" ]; then
-		;
+		echo ""
 	else
 		printf "Do you have another os installed alongside arch?[y/n]: "
 		read -r MULTI_OS
