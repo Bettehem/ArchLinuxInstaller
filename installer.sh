@@ -107,6 +107,12 @@ function goto_continue(){
 	get_progress
 	case $PROGRESS in
 		1) keymap_select;;
+		2) disk_get;;
+		3) disk_partition;;
+		4) disk_partitioned;;
+		5) filesystems;;
+		6) mounting_partitions;;
+		7) install_base;;
 	esac
 }
 #-------------------------------------------------------------------------------
