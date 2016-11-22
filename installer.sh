@@ -101,7 +101,7 @@ function check_start(){
 
 
 #-------------------------------------------------------------------------------
-#If the user ends the installation process in the middle of  and relaunches the installer
+#If the user ends the installation process in the middle of  installing and relaunches the installer
 function continue_progress(){
 	echo "do you want to continue installation from where you were?"
 	select CONTINUE_SELECTION in "Yes" "No"; do
@@ -143,7 +143,7 @@ function keymap_view(){
 	echo "Do you want to view available keymaps?"
 	select VIEW_AVAILABLE_KEYMAPS in "Yes" "No"; do
 		case $VIEW_AVAILABLE_KEYMAPS in
-			Yes ) echo "Press q when you are done with viewing keymaps"; sleep 2; localectl list-keymaps | less; set_progress "1"; clear; keymap_select; break;;
+			Yes ) set_keymap_file; echo "Press q when you are done with viewing keymaps"; sleep 3; cat .keymaps | less; set_progress "1"; clear; keymap_select; break;;
 			No ) set_progress "1"; clear; keymap_select; break;;
 		esac
 	done
@@ -187,8 +187,8 @@ function disk_get(){
 function disk_partition(){
 	show_progress
 	set_drive "$SELECTED_DRIVE"
+	echo -e "WARNING! it is NOT recommended to create a swap partition if\nyou are installing Arch on to a USB drive!"
 	echo "Do you want to partition $SELECTED_DRIVE?"
-	echo -e "WARNING! IT IS NOT RECOMMENDED TO CREATE A SWAP PARTITION IF\nYOU ARE INSTALLING ON TO A USB DRIVE!"
 	select DRIVE_PARTITION in "Yes" "No"; do
 		case $DRIVE_PARTITION in
 			Yes) cfdisk $SELECTED_DRIVE; set_progress "4"; clear; disk_partitioned; break;;
@@ -213,7 +213,12 @@ function disk_partitioned(){
 #These are for Part 4
 #################################################################################
 function boot_created(){
-	printf "Did you create a boot partition?[y/n]: "
+	echo "Listing disks"
+	lsblk
+	echo "Memorize the partition numbers you need and press enter to continue."
+	read
+	clear
+	printf "Did you create a separate boot partition?[y/n]: "
 	read -r CREATED_BOOT
 	if [ "$CREATED_BOOT" == "y" ]; then
 		printf "Enter partition number\n(for example if your boot partition is /dev/sda1 enter \"1\"): "
@@ -793,6 +798,21 @@ function finish_install(){
 	shutdown -h now
 }
 #-------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+function set_keymap_file(){
+	printf "ANSI-dvorak\namiga-de\namiga-us\napplkey\natari-de\natari-se\natari-uk-falcon\natari-us\nazerty\nbackspace\nbashkir\nbe-latin1\nbg-cp1251\nbg-cp855\nbg_bds-cp1251\nbg_bds-utf8\nbg_pho-cp1251\nbg_pho-utf8\nbr-abnt\nbr-abnt2\nbr-latin1-abnt2\nbr-latin1-us\nby\nby-cp1251\nbywin-cp1251\ncf\ncolemak\ncroat\nctrl\ncz\ncz-cp1250\ncz-lat2\ncz-lat2-prog\ncz-qwertz\ncz-us-qwertz\nde\nde-latin1\nde-latin1-nodeadkeys\nde-mobii\nde_CH-latin1\nde_alt_UTF-8\ndefkeymap\ndefkeymap_V1.0\ndk\ndk-latin1\ndvorak\ndvorak-ca-fr\ndvorak-es\ndvorak-fr\ndvorak-l\ndvorak-la\ndvorak-programmer\ndvorak-r\ndvorak-ru\ndvorak-sv-a1\ndvorak-sv-a5\ndvorak-uk\nemacs\nemacs2\nes\nes-cp850\nes-olpc\net\net-nodeadkeys\neuro\neuro1\neuro2\nfi\nfr\nfr-bepo\nfr-bepo-latin9\nfr-latin1\nfr-latin9\nfr-pc\nfr_CH\nfr_CH-latin1\ngr\ngr-pc\nhu\nhu101\nil\nil-heb\nil-phonetic\nis-latin1\nis-latin1-us\nit\nit-ibm\nit2\njp106\nkazakh\nkeypad\nky_alt_sh-UTF-8\nkyrgyz\nla-latin1\nlt\nlt.baltic\nlt.l4\nlv\nlv-tilde\nmac-be\nmac-de-latin1\nmac-de-latin1-nodeadkeys\nmac-de_CH\nmac-dk-latin1\nmac-dvorak\nmac-es\nmac-euro\nmac-euro2\nmac-fi-latin1\nmac-fr\nmac-fr_CH-latin1\nmac-it\nmac-pl\nmac-pt-latin1\nmac-se\nmac-template\nmac-uk\nmac-us\nmk\nmk-cp1251\nmk-utf\nmk0\nnl\nnl2\nno\nno-dvorak\nno-latin1\npc110\npl\npl1\npl2\npl3\npl4\npt-latin1\npt-latin9\npt-olpc\nro\nro_std\nro_win\nru\nru-cp1251\nru-ms\nru-yawerty\nru1\nru2\nru3\nru4\nru_win\nruwin_alt-CP1251\nruwin_alt-KOI8-R\nruwin_alt-UTF-8\nruwin_alt_sh-UTF-8\nruwin_cplk-CP1251\nruwin_cplk-KOI8-R\nruwin_cplk-UTF-8\nruwin_ct_sh-CP1251\nruwin_ct_sh-KOI8-R\nruwin_ct_sh-UTF-8\nruwin_ctrl-CP1251\nruwin_ctrl-KOI8-R\nruwin_ctrl-UTF-8\nse-fi-ir209\nse-fi-lat6\nse-ir209\nse-lat6\nsg\nsg-latin1\nsg-latin1-lk450\nsk-prog-qwerty\nsk-prog-qwertz\nsk-qwerty\nsk-qwertz\nslovene\nsr-cy\nsun-pl\nsun-pl-altgraph\nsundvorak\nsunkeymap\nsunt4-es\nsunt4-fi-latin1\nsunt4-no-latin1\nsunt5-cz-us\nsunt5-de-latin1\nsunt5-es\nsunt5-fi-latin1\nsunt5-fr-latin1\nsunt5-ru\nsunt5-uk\nsunt5-us-cz\nsunt6-uk\nsv-latin1\ntj_alt-UTF8\ntr_f-latin5\ntr_q-latin5\ntralt\ntrf\ntrf-fgGIod\ntrq\nttwin_alt-UTF-8\nttwin_cplk-UTF-8\nttwin_ct_sh-UTF-8\nttwin_ctrl-UTF-8\nua\nua-cp1251\nua-utf\nua-utf-ws\nua-ws\nuk\nunicode\nus\nus-acentos\nwangbe\nwangbe2\nwindowkeys\n" > .keymaps
+}
+
+
+
 
 
 
