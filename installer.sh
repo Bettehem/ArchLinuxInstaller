@@ -462,7 +462,7 @@ function install_base(){
 function fstab(){
 	show_progress
 	echo "Generating fstab..."
-	genfstab -L /mnt > /mnt/etc/fstab
+	genfstab /mnt > /mnt/etc/fstab
 	echo "Generated fstab."
 	
 	set_progress "9"
@@ -498,7 +498,7 @@ function chrooting(){
 	set_progress "11"
 	
 	echo "Chrooting in to /mnt and launching installer.."
-	arch-chroot /mnt ./root/ArchLinuxInstaller/installer.sh "1"
+	arch-chroot /mnt/root ./ArchLinuxInstaller/installer.sh 1
 	clear
 	finish_install
 }
@@ -758,13 +758,14 @@ function normal_user(){
 
 	printf "Add a normal user?(Recommended)[y/n]: "
 	read -r ADD_USER
+	pacman -S xdg-user-dirs
 	if [ "$ADD_USER" == "y" ]; then
-		printf "An username can onky contain lower-case letters and can not contain spaces.\nEnter username: "
+		printf "An username can only contain lower-case letters and can not contain spaces.\nEnter username: "
 		read -r USERNAME
 		useradd -m -g users -G storage,power,wheel -s /bin/bash $USERNAME
 		passwd $USERNAME
 	elif [ "$ADD_USER" == "Y" ]; then
-		printf "An username can onky contain lower-case letters and can not contain spaces.\nEnter username: "
+		printf "An username can only contain lower-case letters and can not contain spaces.\nEnter username: "
 		read -r USERNAME
 		useradd -m -g users -G storage,power,wheel -s /bin/bash $USERNAME
 		passwd $USERNAME
