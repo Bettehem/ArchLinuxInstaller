@@ -491,7 +491,7 @@ function timezone(){
 function chrooting(){
 	show_progress
 	echo "Copying installer files in to /mnt/root/ArchLinuxInstaller"
-	mkdir /mnt/root/ArchLinuxInstaller
+	mkdir -p /mnt/root/ArchLinuxInstaller
 	cp -a * /mnt/root/ArchLinuxInstaller/.
 	cp -a .* /mnt/root/ArchLinuxInstaller/.
 	
