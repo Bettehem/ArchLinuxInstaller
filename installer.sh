@@ -15,7 +15,7 @@ echo -e "Copyright 2015 Chris Mustola\n\nArch Linux installer tool\n------------
 PROGRESS=""
 SELECTED_DRIVE=""
 USING_USB=""
-TOTAL_PROGRESS=7
+TOTAL_PROGRESS=22
 #-------------------------------------------------------------------------------
 
 
@@ -450,7 +450,7 @@ function mounting_partitions(){
 #Part 7
 function install_base(){
 	show_progress
-	pacstrap /mnt base base-devel
+	pacstrap /mnt base base-devel bash-completion
 	echo "Base system installed"
 	
 	set_progress "8"
@@ -497,10 +497,10 @@ function chrooting(){
 	
 	set_progress "11"
 	
+	clear 
+	
 	echo "Chrooting in to /mnt and launching installer.."
 	arch-chroot /mnt ./root/ArchLinuxInstaller/installer.sh 1
-	clear
-	finish_install
 }
 
 #Continuing from here, the installer will be executed in chroot
