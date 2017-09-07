@@ -493,7 +493,7 @@ function chrooting(){
 	set_progress "11"
 	
 	echo "Chrooting in to /mnt and launching installer.."
-	arch-chroot /mnt ./root/ArchLinuxInstaller/installer.sh "1"
+	arch-chroot /mnt ./ArchLinuxInstaller/installer.sh "1"
 	clear
 	finish-install
 }
