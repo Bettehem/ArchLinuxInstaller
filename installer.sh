@@ -29,7 +29,10 @@ function set_progress(){
 }
 
 function get_progress(){
-	PROGRESS="$(cat .progress)"
+	if [ -e "root/ArchLinuxInstaller/.progress" ]; then
+		PROGRESS="$(cat root/ArchLinuxInstaller/.progress)"
+	else
+		PROGRESS="$(cat .progress)"
 }
 
 function show_progress(){
@@ -492,8 +495,8 @@ function chrooting(){
 	show_progress
 	echo "Copying installer files in to /mnt/root/ArchLinuxInstaller"
 	mkdir -p /mnt/root/ArchLinuxInstaller
-	cp -a * /mnt/root/ArchLinuxInstaller/.
-	cp -a .* /mnt/root/ArchLinuxInstaller/.
+	cp * /mnt/root/ArchLinuxInstaller/.
+	cp .* /mnt/root/ArchLinuxInstaller/.
 	
 	set_progress "11"
 	
