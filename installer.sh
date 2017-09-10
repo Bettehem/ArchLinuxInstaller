@@ -33,6 +33,7 @@ function get_progress(){
 		PROGRESS="$(cat root/ArchLinuxInstaller/.progress)"
 	else
 		PROGRESS="$(cat .progress)"
+	fi
 }
 
 function show_progress(){
